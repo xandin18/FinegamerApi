@@ -1,0 +1,6 @@
+@FineGamerApi_HostAddress = http://localhost:5001
+
+GET {{FineGamerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
