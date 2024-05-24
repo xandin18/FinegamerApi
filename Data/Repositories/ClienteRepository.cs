@@ -15,19 +15,24 @@ namespace EF.Repositories
             _context = context;
             _logger = logger;
         }
-        public async Task<ClienteEntity> GetById(int id)
+        public async Task<bool> GetById(string email, string password)
         {
             try
             {
-                _logger.LogInformation($"Buscando cliente de id {id}");
-                var cliente = _context.Cliente.FindAsync(id);
+                _logger.LogInformation($"Buscando cliente de id {email}");
+                var cliente = _context.Cliente
+                      .Where(x => x.Email == email && x.Senha == password)
+                      .FirstOrDefault();
                 _logger.LogInformation($"Busca realizada com sucesso");
-                return await cliente;
+                if(cliente != null)
+                 return true;
+                else
+                 return false;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}", ex);
-                return null;
+                return false;
             }
         }
         public async Task<bool> PostAsync(ClienteEntity model)

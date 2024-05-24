@@ -10,10 +10,10 @@ namespace Api.Controllers
     public class ClienteController : Controller
     {
 
-        [HttpGet("id")]
-        public async Task<ClienteEntity> GetById(int id, [FromServices] IClienteRepository repository)
+        [HttpGet("name/{email}/password/{password}")]
+        public async Task<bool> GetById(string email, string password, [FromServices] IClienteRepository repository)
         {
-            return await repository.GetById(id);
+            return await repository.GetById(email, password);
         }
 
         [HttpPost]
