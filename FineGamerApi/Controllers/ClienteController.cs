@@ -1,6 +1,6 @@
 ﻿using Core.Contracts.Repositories;
 using Core.Entity;
-
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -11,7 +11,7 @@ namespace Api.Controllers
     {
 
         [HttpGet("name/{email}/password/{password}")]
-        public async Task<bool> GetById(string email, string password, [FromServices] IClienteRepository repository)
+        public async Task<TipoDeLogin> GetById(string email, string password, [FromServices] IClienteRepository repository)
         {
             return await repository.GetById(email, password);
         }

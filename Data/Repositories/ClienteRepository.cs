@@ -1,5 +1,6 @@
 ﻿using Core.Contracts.Repositories;
 using Core.Entity;
+using Core.Models;
 using EF.Contexts;
 
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace EF.Repositories
             _context = context;
             _logger = logger;
         }
-        public async Task<bool> GetById(string email, string password)
+        public async Task<TipoDeLogin> GetById(string email, string password)
         {
             try
             {
@@ -25,14 +26,14 @@ namespace EF.Repositories
                       .FirstOrDefault();
                 _logger.LogInformation($"Busca realizada com sucesso");
                 if(cliente != null)
-                 return true;
+                 return TipoDeLogin.Cliente;
                 else
-                 return false;
+                 return TipoDeLogin.Desconhecido;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}", ex);
-                return false;
+                return TipoDeLogin.Desconhecido;
             }
         }
         public async Task<bool> PostAsync(ClienteEntity model)
