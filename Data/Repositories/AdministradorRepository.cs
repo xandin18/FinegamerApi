@@ -1,6 +1,6 @@
 ﻿using Core.Contracts.Repositories;
 using Core.Entity;
-
+using Core.Models;
 using EF.Contexts;
 
 using Microsoft.Extensions.Logging;
@@ -17,19 +17,24 @@ namespace EF.Repositories
             _logger = logger;
         }
 
-        public async Task<AdministradorEntity> GetById(int id)
+        public async Task<TipoDeLogin> GetById(string email, string password)
         {
             try
             {
-                _logger.LogInformation($"Buscando desconto de id {id}");
-                var administrador = _context.Administrador.FindAsync(id);
+                _logger.LogInformation($"Buscando desconto de id {email}");
+                var administrador = _context.Administrador
+                      .Where(x => x.Email == email && x.Senha == password)
+                      .FirstOrDefault(); ;
                 _logger.LogInformation($"Busca realizada com sucesso");
-                return await administrador;
+                if (administrador != null)
+                    return TipoDeLogin.Admin;
+                else
+                    return TipoDeLogin.Desconhecido;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}", ex);
-                return null;
+                return TipoDeLogin.Desconhecido;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Core.Contracts.Repositories;
 using Core.Entity;
-
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -9,10 +9,10 @@ namespace Api.Controllers
     [Route("aplicattion/v1/administrador")]
     public class AdministradorController : Controller
     {
-        [HttpGet("id")]
-        public async Task<AdministradorEntity> GetById(int id, [FromServices] IAdministradorRepository repository)
+        [HttpGet("name/{email}/password/{password}")]
+        public async Task<TipoDeLogin> GetById(string email, string password, [FromServices] IAdministradorRepository repository)
         {
-            return await repository.GetById(id);
+            return await repository.GetById(email, password);
         }
     }
 }
