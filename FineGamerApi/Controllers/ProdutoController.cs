@@ -16,17 +16,18 @@ namespace FineGamerApi.Controllers
             return await repository.GetAll();
         }
 
-        [HttpGet("id")]
-        public async Task<ProdutoEntity> GetById(int id, [FromServices] IProdutoRepository repository)
+        [HttpGet("{nome}")]
+        public async Task<ProdutoEntity> GetById(string nome, [FromServices] IProdutoRepository repository)
         {
-            return await repository.GetById(id);
+            var getbyname = await repository.GetById(nome);
+            return getbyname;
         }
 
         [HttpPost]
-        public async Task<bool> Post([FromBody] ProdutoEntity produto, [FromServices] IProdutoRepository repository)
+        public async Task<IActionResult> Post([FromBody] ProdutoEntity produto, [FromServices] IProdutoRepository repository)
         {
             var post = await repository.PostAsync(produto);
-            return post;
+            return Ok(post);
         }
     }
 }

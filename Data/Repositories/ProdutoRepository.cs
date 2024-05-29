@@ -2,6 +2,7 @@
 using Core.Entity;
 using EF.Contexts;
 using Microsoft.Extensions.Logging;
+using System.Data.Entity;
 
 namespace EF.Repositories
 {
@@ -48,14 +49,14 @@ namespace EF.Repositories
             }
         } 
 
-        public async Task<ProdutoEntity> GetById(int id)
+        public async Task<ProdutoEntity> GetById(string nome)
         {
             try
             {
-                _logger.LogInformation($"Buscando produto de id {id}");
-                var produto = _context.Produto.FindAsync(id);
+                _logger.LogInformation($"Buscando produto de id {nome}");
+                var produto = _context.Produto.Where(x => x.Nome == nome).FirstOrDefault();
                 _logger.LogInformation($"Busca realizada com sucesso");
-                return await produto;
+                return produto;
             }
             catch (Exception ex)
             {

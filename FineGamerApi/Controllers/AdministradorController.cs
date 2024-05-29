@@ -9,7 +9,7 @@ namespace Api.Controllers
     [Route("aplicattion/v1/administrador")]
     public class AdministradorController : Controller
     {
-        [HttpGet("name/{email}/password/{password}")]
+        [HttpGet("/aplicattion/v1/login/{email}/password/{password}")]
         public async Task<TipoDeLogin> GetById(string email, string password, [FromServices] IAdministradorRepository repository)
         {
             return await repository.GetById(email, password);

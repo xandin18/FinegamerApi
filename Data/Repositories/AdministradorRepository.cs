@@ -24,10 +24,15 @@ namespace EF.Repositories
                 _logger.LogInformation($"Buscando desconto de id {email}");
                 var administrador = _context.Administrador
                       .Where(x => x.Email == email && x.Senha == password)
-                      .FirstOrDefault(); ;
+                      .FirstOrDefault();
+                var cliente = _context.Cliente
+                      .Where(x => x.Email == email && x.Senha == password)
+                      .FirstOrDefault();
                 _logger.LogInformation($"Busca realizada com sucesso");
                 if (administrador != null)
                     return TipoDeLogin.Admin;
+                else if(cliente != null)
+                    return TipoDeLogin.Cliente;
                 else
                     return TipoDeLogin.Desconhecido;
             }
